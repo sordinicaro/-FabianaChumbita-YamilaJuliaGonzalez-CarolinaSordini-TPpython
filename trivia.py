@@ -1,6 +1,6 @@
 import random
 
-# Función para dar la bienvenida y validar la edad del jugador
+
 def bienvenida():
     nombre = input("Ingrese su nombre: ")
     edad = int(input("Ingrese su edad: "))
@@ -15,7 +15,7 @@ def bienvenida():
         print("¡Lo sentimos! Debes ser mayor de edad para jugar. Gracias por intentarlo ♥️")
         return nombre, False
 
-# Función que realiza la lógica de preguntas y respuestas
+
 def jugar_trivia(nombre):
     preguntas = [
         ("1 - ¿Cuál es la capital de Perú?", ["a- La Paz", "b- Lima", "c- Quito"], "b"),
@@ -27,7 +27,8 @@ def jugar_trivia(nombre):
     
     random.shuffle(preguntas)
     puntaje = 0
-    
+    errores_consecutivos = 0  
+
     for pregunta, opciones, respuesta_correcta in preguntas:
         print(pregunta)
         for opcion in opciones:
@@ -37,18 +38,25 @@ def jugar_trivia(nombre):
         if respuesta == respuesta_correcta:
             print("La respuesta es correcta.\n")
             puntaje += 1
+            errores_consecutivos = 0  
         else:
             print("La respuesta es incorrecta.\n")
+            errores_consecutivos += 1
+        
+       
+        if errores_consecutivos == 3:
+            print("Has respondido incorrectamente tres veces seguidas. El juego ha terminado.\n")
+            break
     
     print(f"🎉 ¡Has terminado el juego, {nombre}! 🎉")
     print(f"Obtuviste {puntaje} respuestas correctas de {len(preguntas)}.\n")
     print("¡Gracias por jugar! Esperamos verte pronto en otra trivia. ¡Hasta luego! 😊")
 
-# Función principal que ejecuta el juego
+
 def juego_trivia():
     nombre, es_mayor = bienvenida()
     if es_mayor:
         jugar_trivia(nombre)
 
-# Inicia el juego
+
 juego_trivia()
